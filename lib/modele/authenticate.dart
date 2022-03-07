@@ -13,7 +13,7 @@ class Authenticate {
     if (json.containsKey('message')) {
       return Authenticate(message: json['message']);
     } else {
-      return Authenticate(id: json['id'], token: json['token']);
+      return Authenticate(id: json['user'], token: json['token']);
     }
   }
 }

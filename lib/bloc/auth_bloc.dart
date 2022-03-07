@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'bloc.dart';
 import 'package:flutter_api/service/mes_competences_api.dart';
 import 'package:flutter_api/modele/authenticate.dart';
@@ -19,6 +20,7 @@ class AuthBloc extends Bloc {
   doAuthenticate(String email, String password) async {
     _authenticate = await MesCompetencesApi().authenticate(email, password);
     sink.add(_authenticate);
+    inspect(_authenticate);
   }
 
   Authenticate get authenticate => _authenticate;

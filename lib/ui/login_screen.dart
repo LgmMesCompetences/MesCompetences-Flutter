@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_api/bloc/bloc_provider.dart';
 import 'package:flutter_api/bloc/auth_bloc.dart';
+import 'package:flutter_api/bloc/book_bloc.dart';
+import 'package:flutter_api/modele/book.dart';
+import 'package:flutter_api/ui/book_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,6 +15,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AuthBloc>(context);
     final storage = FlutterSecureStorage();
+    final email = TextEditingController();
+    final password = TextEditingController();
 
     return Scaffold(
         appBar: AppBar(),
@@ -29,25 +33,34 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 25)),
-              const TextField(
+              TextField(
+                controller: email,
                 obscureText: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 5)),
-              const TextField(
+              TextField(
+                controller: password,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Mot de passe',
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 25)),
               ElevatedButton(
-                onPressed: () {
-                  return;
+                onPressed: () async {
+                  await bloc.doAuthenticate(email.text, password.text);
+                  if (bloc.authenticate.message == null) {
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return BlocProvider<BookBloc>(
+                          bloc: BookBloc(), child: BookScreen());
+                    }));
+                  }
                 },
                 child: const Text("Se connecter"),
                 style: ButtonStyle(

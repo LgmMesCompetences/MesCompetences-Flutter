@@ -19,7 +19,8 @@ class MesCompetencesApi {
 
   Future<Authenticate> authenticate(String email, String password) async {
     final response = await http.post(Uri.parse(_authenticate()),
-        body: json.encode({"username": email, "password": password}));
+        body: json.encode({"username": email, "password": password}),
+        headers: {"Content-Type": "application/json"});
     final body = json.decode(response.body);
 
     return Authenticate.fromJSON(body);
