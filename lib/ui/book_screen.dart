@@ -30,8 +30,7 @@ class BookScreen extends StatelessWidget {
                       TextFormField(
                         // The validator receives the text that the user has entered.
                         validator: (valeur) {
-                          if (valeur == null ||
-                              valeur.isEmpty) {
+                          if (valeur == null || valeur.isEmpty) {
                             return 'Please enter a valid String';
                           } else {
                             _valeurSaisie = valeur;
@@ -42,11 +41,10 @@ class BookScreen extends StatelessWidget {
                         child: const Text('fetch'),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            /*
                             await bloc.fetchBook(_valeurSaisie);
                             executeAfterFetch(context, bloc);
-                            */
 
+/* 
                             if (await storage.containsKey(key: 'isbn')) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -54,7 +52,7 @@ class BookScreen extends StatelessWidget {
                                           (await storage.read(key: 'isbn'))!)));
                             } else {
                               storage.write(key: 'isbn', value: _valeurSaisie);
-                            }
+                            } */
                           }
                         },
                       ),

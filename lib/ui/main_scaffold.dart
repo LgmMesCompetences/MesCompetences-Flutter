@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_api/bloc/auth_bloc.dart';
 
 import 'package:flutter_api/bloc/bloc_provider.dart';
 import 'package:flutter_api/bloc/book_bloc.dart';
 import 'package:flutter_api/ui/book_screen.dart';
+import 'package:flutter_api/ui/login_screen.dart';
 
 class MainScaffold extends StatelessWidget {
   final String title;
@@ -18,7 +20,8 @@ class MainScaffold extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            const Text('Choose your app'),
+            const Text('Choisir votre page'),
+            const Padding(padding: EdgeInsets.only(bottom: 25)),
             ElevatedButton(
               child: const Text('Articles'),
               onPressed: () => {
@@ -28,6 +31,20 @@ class MainScaffold extends StatelessWidget {
                       bloc: BookBloc(), child: BookScreen());
                 }))
               },
+            ),
+            const Padding(padding: EdgeInsets.only(bottom: 25)),
+            ElevatedButton(
+              onPressed: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return BlocProvider<AuthBloc>(
+                      bloc: AuthBloc(), child: LoginScreen());
+                }))
+              },
+              child: const Text("Se connecter"),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                      (states) => Colors.blue)),
             ),
           ],
         ),
