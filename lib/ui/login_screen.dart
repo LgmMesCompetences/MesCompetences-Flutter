@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'home_page_posseder.dart';
 import 'package:flutter_api/bloc/bloc_provider.dart';
 import 'package:flutter_api/bloc/auth_bloc.dart';
-import 'package:flutter_api/bloc/book_bloc.dart';
-import 'package:flutter_api/modele/book.dart';
-import 'package:flutter_api/ui/book_screen.dart';
+import 'package:flutter_api/ui/home_page_posseder.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  final _formKey = GlobalKey<FormState>();
-  late String _valeurSaisie;
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +51,15 @@ class LoginScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   await bloc.doAuthenticate(email.text, password.text);
+
                   if (bloc.authenticate.message == null) {
-                    Navigator.of(context)
-                        .pushReplacement(MaterialPageRoute(builder: (context) {
-                      return BlocProvider<BookBloc>(
-                          bloc: BookBloc(), child: BookScreen());
-                    }));
+                    storage.write(key: "email", value: email.text);
+                    storage.write(key: "password", value: password.text);
+                    storage.write(key: "token", value: bloc.authenticate.token);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePagePosseder()));
                   }
                 },
                 child: const Text("Se connecter"),
