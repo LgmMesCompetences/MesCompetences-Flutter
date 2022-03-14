@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_api/ui/create_user.dart';
 import 'home_page_posseder.dart';
 import 'package:flutter_api/bloc/bloc_provider.dart';
 import 'package:flutter_api/bloc/auth_bloc.dart';
@@ -67,7 +68,6 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.resolveWith(
                         (states) => Colors.blue)),
               ),
-              const Padding(padding: EdgeInsets.only(bottom: 25)),
             ],
           ),
         ));
